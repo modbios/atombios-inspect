@@ -166,7 +166,7 @@ function format_disassembly(ctx) {
 	s+="<table class=\"table\">";
 	s+="<tr><th>Offset</th><th>Opcode(s)</th><th>Disassembly</th></tr>";
 	for (var i=0;i<ctx.listings.length;i++) {
-		s+="<tr><td>0x"+ctx.listings[i].offset+" (0x"+(ctx.offset+ctx.listings[i].offset).toString(16)+")</td><td>"+format_disassembly_bytes(ctx.listings[i].opcodes)+"</td><td>"+ctx.listings[i].disassembly+"</td></tr>";
+		s+="<tr><td>0x"+(ctx.listings[i].offset+6).toString(16)+" (0x"+(ctx.offset+ctx.listings[i].offset).toString(16)+")</td><td>"+format_disassembly_bytes(ctx.listings[i].opcodes)+"</td><td>"+ctx.listings[i].disassembly+"</td></tr>";
 	}
 	s+="</table>";
 	return s;
@@ -487,7 +487,7 @@ function d_jump(ctx) {
 			break;
 	}
 	o.opcodes = opcode_bytes2(ctx.offset+o.offset,ctx.index-o.offset);
-	o.disassembly = "jump"+cond+" 0x"+(ctx.offset+tgt-6).toString(16);
+	o.disassembly = `jump${cond} 0x${(tgt).toString(16)} (0x${(ctx.offset+tgt-6).toString(16)})`
 	ctx.listings.push(o);
 	return ctx;
 }
